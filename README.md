@@ -30,7 +30,7 @@ This tutorial outlines the implementation of on-premises Active Directory within
 <img src="https://i.imgur.com/UZliaOP.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 </p>
 <p>
-In this post, we'll discuss the process of configuring and managing a domain controller and a client machine in a WindowsThe process begins by setting up and configuring the Windows Defender Firewall with Advanced Security on the server. This includes enabling the Core Networking Diagnostics - ICMP Echo Request (ICMPv4-In) inbound rules to allow for successful pinging between the server and clients. After completing these configurations, you can proceed to install Active Directory Certificate Services on the server through the Server Manager. This will enable the server to be promoted as a domain controller for a new forest, with the root domain name set as "mydomain.com" and a strong password.
+In this post, we'll discuss the process of configuring and managing a domain controller and a client machine. The process begins by setting up and configuring the Windows Defender Firewall with Advanced Security on the server. This includes enabling the Core Networking Diagnostics - ICMP Echo Request (ICMPv4-In) inbound rules to allow for successful pinging between the server and clients. After completing these configurations, you can proceed to install Active Directory Certificate Services on the server through the Server Manager. This will enable the server to be promoted as a domain controller for a new forest, with the root domain name set as "mydomain.com" and a strong password.
 </p>
 <br />
 
