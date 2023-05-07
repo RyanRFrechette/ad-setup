@@ -30,7 +30,7 @@ This tutorial outlines the implementation of on-premises Active Directory within
 <img src="https://i.imgur.com/UZliaOP.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 </p>
 <p>
-In this post, we'll discuss the process of configuring and managing a domain controller and a client machine in a Windows-based environment. This includes the essential tasks of setting up the Windows Defender Firewall with Advanced Security settings to ensure proper communication between the machines, and installing Active Directory Certificate Services on the domain controller to manage users, permissions, and other domain-related settings.
+In this post, we'll discuss the process of configuring and managing a domain controller and a client machine in a WindowsThe process begins by setting up and configuring the Windows Defender Firewall with Advanced Security on the server. This includes enabling the Core Networking Diagnostics - ICMP Echo Request (ICMPv4-In) inbound rules to allow for successful pinging between the server and clients. After completing these configurations, you can proceed to install Active Directory Certificate Services on the server through the Server Manager. This will enable the server to be promoted as a domain controller for a new forest, with the root domain name set as "mydomain.com" and a strong password.
 </p>
 <br />
 
@@ -38,7 +38,7 @@ In this post, we'll discuss the process of configuring and managing a domain con
 <img src="https://i.imgur.com/QpTonRy.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 </p>
 <p>
-Organizational units (OUs) play a crucial role in simplifying the management of user accounts and permissions within the domain. By creating OUs, you can organize your domain in a structured manner, making it easier to manage user accounts and their respective permissions.
+Once the domain controller is set up, you can create organizational units (_EMPLOYEES and _ADMINS) and user accounts within Active Directory Users and Computers. In this example, a user named "jane_admin" is created and added to the Domain Admins group. After creating the user accounts, you can connect to the domain controller and client machines using their respective public IP addresses through Microsoft Remote Desktop. This allows you to verify the user accounts and make any necessary changes, such as renaming the client machine, adding it to the domain, or updating its DNS settings.
 </p>
 <br />
 
@@ -46,7 +46,7 @@ Organizational units (OUs) play a crucial role in simplifying the management of 
 <img src="https://i.imgur.com/o5pLdr6.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 </p>
 <p>
-Another key aspect of domain management is handling user properties such as resetting passwords and enabling or disabling user accounts. These tasks help maintain security and ensure that only authorized users have access to the domain and its resources.
+After successfully joining the client machine to the domain, you can configure remote desktop settings to allow domain users to access the machine remotely. This can be done through the System Properties window on the client machine. You can then verify that the domain users are properly set up by checking their membership within Active Directory Users and Computers on the domain controller.
 </p>
 <br />
 
@@ -54,7 +54,7 @@ Another key aspect of domain management is handling user properties such as rese
 <img src="https://i.imgur.com/MfT0bdg.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 </p>
 <p>
-Furthermore, it is important to understand how to monitor and manage network settings and connectivity. This includes ensuring proper DNS configuration and addressing any issues that may arise, such as IP address conflicts or connectivity problems between the domain controller and client machines.
+PowerShell ISE can be used to run scripts on the domain controller, such as creating new user accounts or modifying existing ones. After running a script, you can refresh the Active Directory Users and Computers window to observe the changes. You can also test the functionality of the user accounts by logging into the client machine with various user credentials, verifying the account information through the command prompt, and observing the results.
 </p>
 <br />
 
@@ -62,6 +62,6 @@ Furthermore, it is important to understand how to monitor and manage network set
 <img src="https://i.imgur.com/6VfpU4E.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 </p>
 <p>
-Overall, this post aims to provide a high-level overview of managing a domain controller and a client machine in a Windows environment. With a solid understanding of Active Directory, user accounts, and system configurations, you'll be well-equipped to handle various IT scenarios that involve managing domain resources.
+Finally, you can manage user accounts by performing actions such as unlocking, resetting passwords, disabling, or enabling accounts through Active Directory Users and Computers on the domain controller. This allows you to maintain control over account access and security. By following these steps, you will have successfully set up and configured a domain controller and client machine, created user accounts and organizational units, and managed user access and permissions within the domain.
 </p>
 <br />
