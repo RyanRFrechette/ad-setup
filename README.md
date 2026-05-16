@@ -4,6 +4,10 @@
 
 # Active Directory Lab: Domain Controller and User Management in Azure
 
+## Recruiter TL;DR
+
+This repo demonstrates foundational Windows administration by building an Active Directory domain lab on Azure VMs. It proves hands-on practice with domain controller setup, DNS, domain joining, organizational units, user/admin accounts, Remote Desktop access, and common account support tasks like password resets, unlocks, disabling, and enabling users.
+
 ## Project Summary
 
 This lab demonstrates a working Windows domain environment built on Microsoft Azure virtual machines. I configured a Windows Server domain controller, joined a Windows client to the domain, created organizational units and users, configured DNS/domain connectivity, enabled remote access, and practiced common account administration tasks.
