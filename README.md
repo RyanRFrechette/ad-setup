@@ -2,73 +2,135 @@
 <img src="https://i.imgur.com/pU5A58S.png" alt="Microsoft Active Directory Logo"/>
 </p>
 
-<h1>Configuring On-Premises Active Directory on Azure Virtual Machines</h1>
+# Active Directory Lab: Domain Controller and User Management in Azure
 
-<h2>About This Project</h2>
+## Project Summary
 
-This portfolio lab demonstrates how to build and manage a basic Active Directory domain environment using Microsoft Azure virtual machines. It covers domain controller setup, DNS configuration, domain joining, organizational units, user account creation, remote access, and common account administration tasks.
+This lab demonstrates a working Windows domain environment built on Microsoft Azure virtual machines. I configured a Windows Server domain controller, joined a Windows client to the domain, created organizational units and users, configured DNS/domain connectivity, enabled remote access, and practiced common account administration tasks.
 
-This project is relevant to help desk, desktop support, junior systems administrator, and cloud support roles because Active Directory remains a core part of many business IT environments. The lab shows practical experience with Windows Server administration, user management, domain access, and troubleshooting basics.
+This is a portfolio project for help desk, desktop support, cloud support, and junior systems administrator roles. It shows that I understand how business users, domain accounts, client machines, DNS, Remote Desktop, and Active Directory all connect in a real support environment.
 
-This tutorial outlines the implementation of on-premises Active Directory within Azure Virtual Machines.<br />
+## Hiring Manager Snapshot
 
-<h2>Environments and Technologies Used</h2>
+| Area | What this lab demonstrates |
+|---|---|
+| Windows Server | Installed and configured a domain controller in a lab environment |
+| Active Directory | Created OUs, users, admin accounts, and domain access structure |
+| DNS / Domain Join | Configured client DNS so a Windows machine could join the domain |
+| Remote Support | Used RDP to manage cloud-hosted Windows machines |
+| User Administration | Practiced account unlocks, password resets, enabling/disabling users |
+| PowerShell | Used scripting concepts to support user/account management |
+| Cloud Fundamentals | Built the lab using Azure virtual machines and networking |
 
-- Microsoft Azure (Virtual Machines/Compute)
-- Remote Desktop
-- Active Directory Domain Services
-- PowerShell
+## Business Scenario
 
-<h2>Operating Systems Used </h2>
+A small organization needs a basic Windows domain where employees can sign into domain-joined computers, admins can manage users centrally, and support staff can troubleshoot account access issues.
 
+This lab simulates that environment by creating:
+
+- A Windows Server domain controller
+- A Windows client machine
+- A domain structure with users and administrative accounts
+- Remote Desktop access for management
+- Basic account support workflows
+
+## Tools and Technologies
+
+- Microsoft Azure Virtual Machines
 - Windows Server 2022
-- Windows 10 (21H2)
+- Windows 10
+- Active Directory Domain Services
+- Active Directory Users and Computers
+- DNS configuration
+- Remote Desktop Protocol
+- PowerShell / PowerShell ISE
 
-<h2>High-Level Deployment and Configuration Steps</h2>
+## What I Built
 
-- Set up Active Directory and Users
-- Configure DNS and Network Settings
-- Manage Users and Remote Access
-- Verify Setup and User Accounts
+- Deployed Windows Server and Windows client VMs in Azure
+- Configured network connectivity between server and client
+- Enabled ICMP testing for connectivity validation
+- Promoted the server into a domain controller
+- Created a new Active Directory forest/domain
+- Created organizational units for employees and admins
+- Created an admin user and assigned domain admin rights
+- Joined the Windows client machine to the domain
+- Configured Remote Desktop access for domain users
+- Practiced user management tasks such as password resets, unlocks, disabling, and enabling accounts
 
-<h2>Deployment and Configuration Steps</h2>
+## Skills Demonstrated
+
+- Building a Windows domain lab from scratch
+- Understanding how DNS affects domain joins
+- Managing users and organizational units in Active Directory
+- Supporting common help desk account issues
+- Verifying network connectivity between machines
+- Using Remote Desktop for administration
+- Documenting technical work clearly with screenshots
+- Connecting Azure infrastructure concepts to Windows administration
+
+## Lab Evidence and Walkthrough
+
+### 1. Domain Controller Preparation
 
 <p>
 <img src="https://i.imgur.com/UZliaOP.png" height="80%" width="80%" alt="Active Directory setup steps"/>
 </p>
-<p>
-In this post, we'll discuss the process of configuring and managing a domain controller and a client machine. The process begins by setting up and configuring the Windows Defender Firewall with Advanced Security on the server. This includes enabling the Core Networking Diagnostics - ICMP Echo Request (ICMPv4-In) inbound rules to allow for successful pinging between the server and clients. After completing these configurations, you can proceed to install Active Directory Certificate Services on the server through the Server Manager. This will enable the server to be promoted as a domain controller for a new forest, with the root domain name set as "mydomain.com" and a strong password.
-</p>
-<br />
+
+I prepared the Windows Server VM for domain controller duties and verified basic network communication. This included configuring Windows Defender Firewall rules to allow ICMP testing so connectivity between machines could be confirmed before deeper domain configuration.
+
+### 2. Active Directory Structure and Admin User
 
 <p>
 <img src="https://i.imgur.com/QpTonRy.png" height="80%" width="80%" alt="Active Directory users and computers"/>
 </p>
-<p>
-Once the domain controller is set up, you can create organizational units (_EMPLOYEES and _ADMINS) and user accounts within Active Directory Users and Computers. In this example, a user named "jane_admin" is created and added to the Domain Admins group. After creating the user accounts, you can connect to the domain controller and client machines using their respective public IP addresses through Microsoft Remote Desktop. This allows you to verify the user accounts and make any necessary changes, such as renaming the client machine, adding it to the domain, or updating its DNS settings.
-</p>
-<br />
+
+I created organizational units for employees and admins, then created a domain admin account. This demonstrates the basic identity structure used in many Windows business environments.
+
+### 3. Client Domain Join and Remote Access
 
 <p>
 <img src="https://i.imgur.com/o5pLdr6.png" height="80%" width="80%" alt="Domain join and remote desktop settings"/>
 </p>
-<p>
-After successfully joining the client machine to the domain, you can configure remote desktop settings to allow domain users to access the machine remotely. This can be done through the System Properties window on the client machine. You can then verify that the domain users are properly set up by checking their membership within Active Directory Users and Computers on the domain controller.
-</p>
-<br />
+
+I joined the Windows client machine to the domain and configured Remote Desktop access for domain users. This is a common real-world support task when setting up or troubleshooting company workstations.
+
+### 4. PowerShell User Creation and Verification
 
 <p>
 <img src="https://i.imgur.com/MfT0bdg.png" height="80%" width="80%" alt="PowerShell user administration"/>
 </p>
-<p>
-PowerShell ISE can be used to run scripts on the domain controller, such as creating new user accounts or modifying existing ones. After running a script, you can refresh the Active Directory Users and Computers window to observe the changes. You can also test the functionality of the user accounts by logging into the client machine with various user credentials, verifying the account information through the command prompt, and observing the results.
-</p>
-<br />
+
+I used PowerShell ISE to work with account creation concepts and verified the results inside Active Directory Users and Computers. This shows comfort with both GUI-based and script-assisted administration.
+
+### 5. Account Administration Practice
 
 <p>
 <img src="https://i.imgur.com/6VfpU4E.png" height="80%" width="80%" alt="Active Directory account management"/>
 </p>
-<p>
-Finally, you can manage user accounts by performing actions such as unlocking, resetting passwords, disabling, or enabling accounts through Active Directory Users and Computers on the domain controller. This allows you to maintain control over account access and security. By following these steps, you will have successfully set up and configured a domain controller and client machine, created user accounts and organizational units, and managed user access and permissions within the domain.
-</p>
-<br />
+
+I practiced common support actions such as unlocking accounts, resetting passwords, disabling accounts, and enabling accounts. These are directly relevant to entry-level help desk and support roles.
+
+## Real-World Support Relevance
+
+This lab maps to common tickets such as:
+
+- “User cannot log into their workstation”
+- “New employee needs a domain account”
+- “User account is locked”
+- “Password reset request”
+- “Computer cannot join the domain”
+- “Remote Desktop access is not working”
+- “DNS/domain connectivity issue”
+
+## What I Learned
+
+- Active Directory depends heavily on correct DNS configuration
+- Domain-joined clients need to point to the domain controller for name resolution
+- Account access issues are often solved through structured checks: user status, password, group membership, machine domain status, and network connectivity
+- Azure VMs can be used to safely practice Windows administration without physical hardware
+- Clear documentation makes troubleshooting repeatable and easier to hand off
+
+## Status
+
+Completed portfolio lab. Future improvements could include Group Policy, shared folders, mapped drives, account lockout policy testing, and a deeper troubleshooting scenario set.
