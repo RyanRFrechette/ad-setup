@@ -135,6 +135,10 @@ This lab maps to common tickets such as:
 - Azure VMs can be used to safely practice Windows administration without physical hardware
 - Clear documentation makes troubleshooting repeatable and easier to hand off
 
+## Related Training
+
+This lab extends foundational IT support concepts from the Google IT Support Professional Certificate into identity, user management, and cloud-based administration practice.
+
 ## Status
 
 Completed portfolio lab. Future improvements could include Group Policy, shared folders, mapped drives, account lockout policy testing, and a deeper troubleshooting scenario set.
