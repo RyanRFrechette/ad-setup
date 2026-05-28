@@ -2,23 +2,51 @@
 
 **Status:** Resolved  
 **Priority:** High  
-**Category:** Authentication
+**Category:** Authentication  
+**Environment:** Windows Server 2022 domain controller · Windows 10 client · AD DS lab domain
 
-## Issue Description
-User reports they cannot log into their domain-joined Windows workstation. Login fails with an error or credentials are rejected at the Windows login screen.
+---
 
-## Steps Taken
-1. Verified user account exists in Active Directory Users and Computers (ADUC)
-2. Confirmed account is not disabled or expired
-3. Checked account logon hours and workstation restrictions
-4. Verified the workstation is still domain-joined and can reach the domain controller
-5. Confirmed DNS is resolving the domain controller correctly on the client
+## Problem
+
+User reports they cannot log into their domain-joined Windows 10 workstation. The Windows login screen rejects their credentials with "The user name or password is incorrect" even though the user believes the password is correct.
+
+---
+
+## Environment
+
+- Domain controller: Windows Server 2022 running AD DS and DNS
+- Client machine: Windows 10, domain-joined
+- User account managed in Active Directory Users and Computers (ADUC)
+
+---
+
+## Checks Performed
+
+1. Opened ADUC on the domain controller and located the user account
+2. Confirmed account was not disabled — checked Account tab for disabled flag
+3. Confirmed password was not expired — checked "Password never expires" and last set date
+4. Checked account logon hours restrictions — no restrictions applied
+5. On the client, ran `nltest /sc_verify:lab.local` to confirm the secure channel to the DC was intact
+6. Ran `nslookup lab.local` on the client to verify DNS was resolving the domain controller
+7. Reviewed Security event log on the domain controller for Event ID 4625 (failed logon)
+
+---
 
 ## Resolution
-<!-- Document what fixed the issue -->
-_Placeholder: describe resolution here._
 
-## Notes
-- Common causes: disabled account, expired password, domain trust issue, DNS failure, workstation dropped from domain
-- Check Event Viewer on the client (Security log, Event ID 4625) for detailed failure reasons
-- Use `nltest /sc_verify:domain.local` to verify the secure channel to the DC
+Event ID 4625 showed failure reason: **wrong password**. The user had Caps Lock on and did not realize it. Reset the domain password via ADUC (right-click user → Reset Password) with "User must change password at next logon" checked, provided the temporary password to the user, and confirmed successful login.
+
+---
+
+## Verification
+
+User logged into the domain-joined workstation successfully. Prompted to set a new password on first login. Confirmed domain login by checking `whoami` returned `LAB\username`.
+
+---
+
+## What This Proves
+
+- Can navigate ADUC to inspect and manage a domain user account
+- Understands the structured login failure diagnostic process (account status → password → DNS → secure channel → event logs)
+- Can perform a password reset in Active Directory and communicate it securely
