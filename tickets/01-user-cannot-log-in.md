@@ -35,13 +35,13 @@ User reports they cannot log into their domain-joined Windows 10 workstation. Th
 
 ## Resolution
 
-Event ID 4625 showed failure reason: **wrong password**. The user had Caps Lock on and did not realize it. Reset the domain password via ADUC (right-click user → Reset Password) with "User must change password at next logon" checked, provided the temporary password to the user, and confirmed successful login.
+In this scenario, Event ID 4625 reveals the failure reason (wrong password, account restriction, or logon type mismatch). The documented resolution path is to reset the domain password via ADUC (right-click user → Reset Password) with "User must change password at next logon" checked, then deliver the temporary password to the user securely.
 
 ---
 
 ## Verification
 
-User logged into the domain-joined workstation successfully. Prompted to set a new password on first login. Confirmed domain login by checking `whoami` returned `LAB\username`.
+Expected verification: user logs into the domain-joined workstation with the temporary password, is immediately prompted to set a new password, and can confirm domain authentication by running `whoami` — expected output: `LAB\username`.
 
 ---
 

@@ -25,9 +25,9 @@ User cannot log into their workstation. The login screen shows "Your account has
 
 1. Opened ADUC, located the user account — lock icon confirmed the account was locked
 2. Checked the Account tab: "Unlock account" checkbox was available, confirming lockout state
-3. Opened Event Viewer on the domain controller, filtered Security log for Event ID 4740 (account lockout)
-4. Event ID 4740 identified the source machine causing repeated failed authentications
-5. Investigated the source machine — found a mapped network drive still using the user's old cached credentials
+3. Opened Event Viewer on the domain controller, filtered Security log for Event ID 4740 (account lockout) to identify the source machine
+4. In this scenario, Event ID 4740 would name the Caller Computer Name — the device generating the failed attempts
+5. Investigated the source machine for stale saved credentials (common cause: mapped drive or app still using an old password)
 
 ---
 
@@ -45,7 +45,7 @@ Get-ADUser jdoe -Properties LockedOut, BadLogonCount | Select LockedOut, BadLogo
 
 ## Verification
 
-Confirmed `LockedOut` returned `False` in PowerShell. User logged in successfully. Monitored for re-lockout over the next 10 minutes — account remained unlocked.
+Expected verification: `Get-ADUser jdoe -Properties LockedOut` returns `LockedOut: False`. User logs in successfully. Monitor for re-lockout — if it recurs immediately, a device with stale credentials is still active and needs to be addressed.
 
 ---
 

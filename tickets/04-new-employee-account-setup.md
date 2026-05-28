@@ -53,10 +53,10 @@ Add-ADGroupMember -Identity "SalesShare" -Members jdoe
 
 ## Verification
 
-Logged into the domain-joined Windows 10 client as the new user. Confirmed:
-- Prompted to change password on first logon
-- `gpresult /r` showed correct Group Policy applied for the `_EMPLOYEES` OU
-- User had access to expected shared resources, not beyond
+Expected verification steps:
+- Log into the domain-joined Windows 10 client as the new user — should be prompted to change password on first logon
+- Run `gpresult /r` to confirm Group Policy from the `_EMPLOYEES` OU is applying correctly
+- Confirm the user can access expected shared resources and cannot access resources outside their group membership
 
 ---
 

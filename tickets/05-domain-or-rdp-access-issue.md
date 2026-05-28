@@ -26,23 +26,23 @@ User cannot connect to a domain-joined Azure VM via Remote Desktop Protocol (RDP
 
 **RDP issue:**
 1. Confirmed the target VM was running in the Azure portal
-2. Checked the Azure NSG inbound rules — port 3389 was missing a rule for the admin's IP
+2. Reviewed Azure NSG inbound rules for port 3389 — in this scenario, a missing or overly restrictive rule is the first thing to check
 3. Confirmed Remote Desktop was enabled on the target VM (System Properties → Remote)
 4. Confirmed the connecting user was a member of the Remote Desktop Users group in ADUC
 
 **Domain join issue:**
-1. On the client VM, ran `nslookup lab.local` — returned no results (DNS pointed to 8.8.8.8 instead of the DC)
-2. Updated the client VM's DNS server address to the domain controller's private IP
-3. Re-ran `nslookup lab.local` — resolved correctly to the DC
-4. Attempted domain join again via System Properties → Change
+1. On the client VM, ran `nslookup lab.local` to test DNS resolution — a failed result points to incorrect DNS server configuration
+2. Checked the client VM's DNS server setting — in this scenario, it would be pointing to a public resolver instead of the domain controller's private IP
+3. Updated the DNS server address to the domain controller's private IP and re-ran `nslookup lab.local` to confirm resolution
+4. Reattempted domain join via System Properties → Change
 
 ---
 
 ## Resolution
 
-**RDP:** Added an inbound NSG rule for port 3389 from the admin IP. RDP connection succeeded immediately after the rule was saved.
+**RDP:** In this scenario, adding an inbound NSG rule for port 3389 scoped to the admin IP resolves the timeout. The documented resolution path is: Azure portal → NSG → Inbound security rules → Add rule for port 3389.
 
-**Domain join:** Correcting the DNS server from `8.8.8.8` to the domain controller's private IP resolved the join failure. The workstation joined the domain on the next attempt without any other changes.
+**Domain join:** The documented resolution is to correct the client VM's DNS server from a public resolver to the domain controller's private IP. Once DNS resolves `lab.local` correctly, the domain join completes through System Properties → Change.
 
 ```powershell
 # Verify DNS resolution on the client
@@ -59,8 +59,9 @@ Get-ADGroupMember -Identity "Remote Desktop Users"
 
 ## Verification
 
-- RDP: Connected successfully to the domain-joined VM via Remote Desktop after NSG rule update
-- Domain join: Received "Welcome to the lab.local domain" confirmation dialog. User logged in with domain credentials on first boot after join.
+Expected verification steps:
+- RDP: After adding the NSG rule, open Remote Desktop Connection and connect using the VM's public IP — a successful desktop session confirms the fix
+- Domain join: After correcting DNS and rejoining, Windows displays a "Welcome to the lab.local domain" confirmation dialog; verify by logging in with domain credentials (`LAB\username`) on the next boot
 
 ---
 

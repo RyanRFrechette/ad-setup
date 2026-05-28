@@ -44,7 +44,7 @@ Set-ADUser -Identity jdoe -ChangePasswordAtLogon $true
 
 ## Verification
 
-User logged in with the temporary password, was immediately prompted to set a new password, and confirmed access to their workstation and shared drives.
+Expected verification: user logs in with the temporary password, is immediately prompted to set a new password, and can access their workstation and domain resources normally after the change.
 
 ---
 
