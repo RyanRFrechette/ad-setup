@@ -6,74 +6,118 @@
 
 ## Recruiter TL;DR
 
-This portfolio lab demonstrates foundational Windows administration and help desk account-support skills by building an Active Directory domain environment on Azure virtual machines. It proves hands-on practice with domain controller setup, DNS, domain joining, organizational units, user/admin accounts, Remote Desktop access, and common support tasks like password resets, account unlocks, disabling users, and enabling users.
+This portfolio lab demonstrates foundational Windows administration and help desk account-support skills by building a Windows Server Active Directory Domain Services (AD DS) environment on Azure virtual machines. It proves hands-on practice with domain controller setup, DNS, domain joining, organizational units, user/admin accounts, Remote Desktop access, and common support tasks — password resets, account unlocks, disabling and enabling users.
 
-## Project Summary
+> Full case study: [case-study.md](case-study.md) | Resume bullets: [resume-bullets.md](resume-bullets.md)
 
-This lab demonstrates a working Windows domain environment built on Microsoft Azure virtual machines. I configured a Windows Server domain controller, joined a Windows client to the domain, created organizational units and users, configured DNS/domain connectivity, enabled remote access, and practiced common account administration tasks.
-
-This is a portfolio project for help desk, desktop support, cloud support, and junior systems administrator roles. It shows that I understand how business users, domain accounts, client machines, DNS, Remote Desktop, and Active Directory all connect in a real support environment.
-
-## Hiring Manager Snapshot
-
-| Area | What this lab demonstrates |
-|---|---|
-| Windows Server | Installed and configured a domain controller in a lab environment |
-| Active Directory | Created OUs, users, admin accounts, and domain access structure |
-| DNS / Domain Join | Configured client DNS so a Windows machine could join the domain |
-| Remote Support | Used RDP to manage cloud-hosted Windows machines |
-| User Administration | Practiced account unlocks, password resets, enabling/disabling users |
-| PowerShell | Used scripting concepts to support user/account management |
-| Cloud Fundamentals | Built the lab using Azure virtual machines and networking |
+---
 
 ## Business Scenario
 
-A small organization needs a basic Windows domain where employees can sign into domain-joined computers, admins can manage users centrally, and support staff can troubleshoot account access issues.
+A small organization needs a Windows domain where employees sign into domain-joined computers, admins manage users centrally, and support staff resolve account access issues.
 
-This lab simulates that environment by creating:
+This lab simulates that environment:
 
-- A Windows Server domain controller
-- A Windows client machine
-- A domain structure with users and administrative accounts
-- Remote Desktop access for management
-- Basic account support workflows
+- Windows Server 2022 domain controller with AD DS and DNS
+- Windows 10 client machine joined to the domain
+- Organizational units, user accounts, and a domain admin account
+- Remote Desktop access for administration and user support
+- Documented account support workflows
 
-## Tools and Technologies
+| Area | What this lab demonstrates |
+|---|---|
+| Windows Server | Installed and configured a domain controller on Azure VMs |
+| Active Directory | Created OUs, users, admin accounts, and domain access structure |
+| DNS / Domain Join | Configured client DNS so a Windows machine could join the domain |
+| Remote Support | Used RDP to manage cloud-hosted Windows machines |
+| User Administration | Account unlocks, password resets, enabling and disabling users |
+| PowerShell | Scripted account management tasks alongside GUI administration |
+| Cloud Fundamentals | Built the full lab using Azure virtual machines and networking |
 
-- Microsoft Azure Virtual Machines
-- Windows Server 2022
-- Windows 10
-- Active Directory Domain Services
-- Active Directory Users and Computers
-- DNS configuration
-- Remote Desktop Protocol
-- PowerShell / PowerShell ISE
+---
 
-## What I Built
+## Lab Architecture
 
-- Deployed Windows Server and Windows client VMs in Azure
-- Configured network connectivity between server and client
-- Enabled ICMP testing for connectivity validation
-- Promoted the server into a domain controller
-- Created a new Active Directory forest/domain
-- Created organizational units for employees and admins
-- Created an admin user and assigned domain admin rights
-- Joined the Windows client machine to the domain
-- Configured Remote Desktop access for domain users
-- Practiced user management tasks such as password resets, unlocks, disabling, and enabling accounts
+Two Azure virtual machines connected on a private virtual network — one Windows Server domain controller, one domain-joined Windows client.
 
-## Skills Demonstrated
+See full diagram: [diagrams/architecture.md](diagrams/architecture.md)
 
-- Building a Windows domain lab from scratch
-- Understanding how DNS affects domain joins
-- Managing users and organizational units in Active Directory
-- Supporting common help desk account issues
-- Verifying network connectivity between machines
-- Using Remote Desktop for administration
-- Documenting technical work clearly with screenshots
-- Connecting Azure infrastructure concepts to Windows administration
+```
+┌──────────────────────────────────────────────────┐
+│              Azure Virtual Network                │
+│                                                  │
+│  ┌──────────────────────┐  ┌──────────────────┐  │
+│  │  Windows Server VM   │  │  Windows 10/11   │  │
+│  │  Domain Controller   │  │  Client VM       │  │
+│  │                      │  │                  │  │
+│  │  - AD DS             │  │  - Domain-joined │  │
+│  │  - DNS Server        │  │  - RDP access    │  │
+│  │  - ADUC / GPMC       │  │  - User logins   │  │
+│  └──────────────────────┘  └──────────────────┘  │
+│                                                  │
+│  Network Security Group (NSG)                    │
+│  Inbound: RDP (3389) from admin IP               │
+└──────────────────────────────────────────────────┘
+```
 
-## Lab Evidence and Walkthrough
+**Authentication flow:** User logs in → Windows client contacts DC via Kerberos (port 88) → AD DS authenticates → Group Policy applies → Session starts
+
+---
+
+## Tools Used
+
+| Tool | Purpose |
+|---|---|
+| Microsoft Azure Virtual Machines | Host Windows Server and Windows client |
+| Windows Server 2022 | Domain controller OS |
+| Windows 10 | Domain-joined client OS |
+| Active Directory Domain Services (AD DS) | Directory and identity management |
+| Active Directory Users and Computers (ADUC) | GUI user/group/OU administration |
+| DNS Manager | Domain name resolution for domain join and auth |
+| Remote Desktop Protocol (RDP) | Remote management of VMs |
+| PowerShell / PowerShell ISE | Scripted account operations |
+
+---
+
+## Build Steps
+
+1. Deployed Windows Server and Windows 10 VMs in Azure on a shared virtual network
+2. Configured network connectivity and enabled ICMP for connectivity validation
+3. Promoted the Windows Server VM to a domain controller with AD DS and DNS
+4. Created a new Active Directory forest and domain
+5. Created organizational units for employees and administrators
+6. Created a domain admin account and assigned domain admin rights
+7. Configured the Windows 10 client's DNS to point to the domain controller
+8. Joined the Windows client to the domain
+9. Configured Remote Desktop access for domain users
+10. Practiced account administration: password resets, unlocks, disabling, enabling
+
+---
+
+## Support Tasks Practiced
+
+These map directly to common help desk tickets:
+
+- User cannot log into their workstation
+- Password reset request
+- Account locked out after failed login attempts
+- New employee needs a domain account and OU placement
+- Workstation cannot join the domain (DNS misconfiguration)
+- Remote Desktop access not working (NSG rule or group membership)
+
+---
+
+## Ticket Evidence
+
+Full ticket documentation: [tickets/](tickets/)
+
+| Ticket | Issue | File |
+|---|---|---|
+| 01 | User cannot log in | [tickets/01-user-cannot-log-in.md](tickets/01-user-cannot-log-in.md) |
+| 02 | Password reset request | [tickets/02-password-reset-request.md](tickets/02-password-reset-request.md) |
+| 03 | Account locked out | [tickets/03-account-locked.md](tickets/03-account-locked.md) |
+| 04 | New employee account setup | [tickets/04-new-employee-account-setup.md](tickets/04-new-employee-account-setup.md) |
+| 05 | Domain / RDP access issue | [tickets/05-domain-or-rdp-access-issue.md](tickets/05-domain-or-rdp-access-issue.md) |
 
 ### 1. Domain Controller Preparation
 
@@ -81,7 +125,7 @@ This lab simulates that environment by creating:
 <img src="https://i.imgur.com/UZliaOP.png" height="80%" width="80%" alt="Active Directory setup steps"/>
 </p>
 
-I prepared the Windows Server VM for domain controller duties and verified basic network communication. This included configuring Windows Defender Firewall rules to allow ICMP testing so connectivity between machines could be confirmed before deeper domain configuration.
+Prepared the Windows Server VM for domain controller duties and verified network communication between VMs. Configured Windows Defender Firewall rules to allow ICMP so connectivity could be confirmed before domain configuration.
 
 ### 2. Active Directory Structure and Admin User
 
@@ -89,7 +133,7 @@ I prepared the Windows Server VM for domain controller duties and verified basic
 <img src="https://i.imgur.com/QpTonRy.png" height="80%" width="80%" alt="Active Directory users and computers"/>
 </p>
 
-I created organizational units for employees and admins, then created a domain admin account. This demonstrates the basic identity structure used in many Windows business environments.
+Created organizational units for employees and administrators, then created a domain admin account in ADUC. This is the identity structure used in most Windows business environments.
 
 ### 3. Client Domain Join and Remote Access
 
@@ -97,7 +141,7 @@ I created organizational units for employees and admins, then created a domain a
 <img src="https://i.imgur.com/o5pLdr6.png" height="80%" width="80%" alt="Domain join and remote desktop settings"/>
 </p>
 
-I joined the Windows client machine to the domain and configured Remote Desktop access for domain users. This is a common real-world support task when setting up or troubleshooting company workstations.
+Joined the Windows client to the domain and configured Remote Desktop access for domain users — a common task when setting up or troubleshooting company workstations.
 
 ### 4. PowerShell User Creation and Verification
 
@@ -105,7 +149,7 @@ I joined the Windows client machine to the domain and configured Remote Desktop 
 <img src="https://i.imgur.com/MfT0bdg.png" height="80%" width="80%" alt="PowerShell user administration"/>
 </p>
 
-I used PowerShell ISE to work with account creation concepts and verified the results inside Active Directory Users and Computers. This shows comfort with both GUI-based and script-assisted administration.
+Used PowerShell ISE for account creation and verified results in ADUC. Demonstrates comfort with both GUI-based and script-assisted administration.
 
 ### 5. Account Administration Practice
 
@@ -113,32 +157,39 @@ I used PowerShell ISE to work with account creation concepts and verified the re
 <img src="https://i.imgur.com/6VfpU4E.png" height="80%" width="80%" alt="Active Directory account management"/>
 </p>
 
-I practiced common support actions such as unlocking accounts, resetting passwords, disabling accounts, and enabling accounts. These are directly relevant to entry-level help desk and support roles.
+Practiced common support actions: unlocking accounts, resetting passwords, disabling accounts, and enabling accounts — directly relevant to help desk and desktop support roles.
 
-## Real-World Support Relevance
+---
 
-This lab maps to common tickets such as:
+## Lessons Learned
 
-- “User cannot log into their workstation”
-- “New employee needs a domain account”
-- “User account is locked”
-- “Password reset request”
-- “Computer cannot join the domain”
-- “Remote Desktop access is not working”
-- “DNS/domain connectivity issue”
+- Active Directory depends heavily on correct DNS configuration — the client must point to the DC for name resolution, not a public resolver
+- Domain join failures almost always trace back to DNS before anything else
+- Account access issues follow a structured resolution path: user status → password → group membership → machine domain status → network connectivity
+- Azure VMs are an effective and affordable way to practice Windows administration without physical hardware
+- Clear documentation makes troubleshooting repeatable and easier to hand off to another technician
 
-## What I Learned
+---
 
-- Active Directory depends heavily on correct DNS configuration
-- Domain-joined clients need to point to the domain controller for name resolution
-- Account access issues are often solved through structured checks: user status, password, group membership, machine domain status, and network connectivity
-- Azure VMs can be used to safely practice Windows administration without physical hardware
-- Clear documentation makes troubleshooting repeatable and easier to hand off
+## Resume Value
+
+See [resume-bullets.md](resume-bullets.md) for ready-to-use resume bullets and ATS keywords tailored to help desk, desktop support, and junior sysadmin roles.
+
+**Core competencies this lab proves:**
+- Windows Server domain controller configuration
+- Active Directory user, group, and OU management
+- DNS troubleshooting in a Windows domain environment
+- RDP-based remote administration
+- Common account support workflows (reset, unlock, disable, enable, provision)
+
+---
 
 ## Related Training
 
-This lab extends foundational IT support concepts from the Google IT Support Professional Certificate into identity, user management, and cloud-based administration practice.
+This lab extends foundational IT support concepts from the Google IT Support Professional Certificate into identity management, Windows domain administration, and cloud-based lab practice.
+
+---
 
 ## Status
 
-Completed portfolio lab. Future improvements could include Group Policy, shared folders, mapped drives, account lockout policy testing, and a deeper troubleshooting scenario set.
+Completed portfolio lab. Planned additions: Group Policy Object configuration, shared folder permissions, account lockout policy testing, and deeper multi-step troubleshooting scenarios.
