@@ -5,20 +5,21 @@
 **Category:** Account Management
 
 ## Issue Description
-User account has been locked after multiple failed sign-in attempts. User is unable to authenticate until the account is unlocked.
+User's domain account has been locked after multiple failed sign-in attempts. User cannot authenticate until the account is unlocked by an administrator.
 
 ## Steps Taken
-1. Confirmed lockout in Azure AD via user account status
-2. Reviewed Azure AD Sign-in logs to identify source of failed attempts
-3. Checked for signs of unauthorized access or credential stuffing
-4. Unlocked the account in Azure Portal (or via PowerShell)
-5. Advised user to update any saved passwords on devices or apps
+1. Confirmed lockout in Active Directory Users and Computers (ADUC) — lock icon on account
+2. Reviewed Security event logs on the domain controller (Event ID 4740) to identify the source machine
+3. Checked for stale cached credentials on the user's devices (mapped drives, saved passwords)
+4. Unlocked the account in ADUC (Account tab → Unlock account)
+5. Advised user to update saved credentials on all devices
 
 ## Resolution
 <!-- Document what fixed the issue -->
 _Placeholder: describe resolution here._
 
 ## Notes
-- PowerShell: `Set-MsolUser -UserPrincipalName user@domain.com -BlockCredential $false`
-- Investigate repeated lockouts — may indicate a compromised credential
-- Review Smart Lockout settings in Azure AD for threshold tuning
+- PowerShell: `Unlock-ADAccount -Identity username`
+- Use `Get-ADUser username -Properties LockedOut,BadLogonCount` to inspect account state
+- Repeated lockouts often point to a device with stale cached credentials, not a user error
+- Review domain Account Lockout Policy via Group Policy (gpmc.msc) for threshold settings

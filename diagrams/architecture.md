@@ -1,37 +1,33 @@
-# Lab Architecture — Azure Active Directory User Support Lab
+# Lab Architecture — Active Directory User Support Lab
 
 ## Overview
-Single-tenant Azure environment simulating a small enterprise IT setup for help desk practice.
+Two Azure virtual machines simulating a small Windows domain: one Windows Server domain controller and one Windows client joined to the domain.
 
 ## Components
 
 ```
-┌─────────────────────────────────────────────┐
-│           Azure Active Directory             │
-│  (Entra ID Tenant)                          │
-│                                             │
-│  Users / Groups / Licenses / Policies       │
-└────────────────┬────────────────────────────┘
-                 │
-    ┌────────────▼────────────┐
-    │   Azure Virtual Network  │
-    │                          │
-    │  ┌────────────────────┐  │
-    │  │  Windows Server VM │  │
-    │  │  (Domain-joined)   │  │
-    │  │  RDP port 3389     │  │
-    │  └────────────────────┘  │
-    │                          │
-    │  Network Security Group  │
-    │  (Inbound: RDP, HTTPS)   │
-    └──────────────────────────┘
+┌──────────────────────────────────────────────────┐
+│              Azure Virtual Network                │
+│                                                  │
+│  ┌──────────────────────┐  ┌──────────────────┐  │
+│  │  Windows Server VM   │  │  Windows 10/11   │  │
+│  │  Domain Controller   │  │  Client VM       │  │
+│  │                      │  │                  │  │
+│  │  - AD DS             │  │  - Domain-joined │  │
+│  │  - DNS Server        │  │  - RDP access    │  │
+│  │  - ADUC / GPMC       │  │  - User logins   │  │
+│  └──────────────────────┘  └──────────────────┘  │
+│                                                  │
+│  Network Security Group (NSG)                    │
+│  Inbound: RDP (3389) from admin IP               │
+└──────────────────────────────────────────────────┘
 ```
 
 ## Access Methods
-- **Azure Portal** — user and group management, license assignment
-- **RDP** — remote desktop into Azure VMs
-- **PowerShell** — scripted account operations (unlock, reset, provision)
-- **Azure Bastion** *(optional)* — browser-based RDP without open port 3389
+- **RDP** — remote desktop into domain controller and client VMs via Azure public IP
+- **Active Directory Users and Computers (ADUC)** — GUI-based user and group management on the DC
+- **PowerShell** — scripted account operations (create, unlock, reset, query)
+- **DNS Manager** — verify DNS records that support domain join and authentication
 
-## Identity Flow
-User sign-in → Azure AD authentication → Conditional Access evaluation → Session granted or denied
+## Authentication Flow
+User logs into Windows client → client contacts DC on port 88 (Kerberos) → DC authenticates against AD DS → Group Policy applied → Desktop session started

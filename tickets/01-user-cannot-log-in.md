@@ -5,19 +5,20 @@
 **Category:** Authentication
 
 ## Issue Description
-User reports they cannot log into their workstation or Azure-joined device. Login fails with an error or the credentials are rejected.
+User reports they cannot log into their domain-joined Windows workstation. Login fails with an error or credentials are rejected at the Windows login screen.
 
 ## Steps Taken
-1. Verified user account exists in Azure Active Directory
-2. Confirmed account is not disabled or deleted
-3. Checked for active sign-in restrictions or Conditional Access policies
-4. Verified correct UPN (User Principal Name) format
-5. Tested sign-in from Azure Portal to isolate the issue
+1. Verified user account exists in Active Directory Users and Computers (ADUC)
+2. Confirmed account is not disabled or expired
+3. Checked account logon hours and workstation restrictions
+4. Verified the workstation is still domain-joined and can reach the domain controller
+5. Confirmed DNS is resolving the domain controller correctly on the client
 
 ## Resolution
 <!-- Document what fixed the issue -->
 _Placeholder: describe resolution here._
 
 ## Notes
-- Common causes: incorrect UPN, expired password, MFA not configured, Conditional Access block
-- Check Azure AD Sign-in logs for detailed error codes
+- Common causes: disabled account, expired password, domain trust issue, DNS failure, workstation dropped from domain
+- Check Event Viewer on the client (Security log, Event ID 4625) for detailed failure reasons
+- Use `nltest /sc_verify:domain.local` to verify the secure channel to the DC
