@@ -6,9 +6,9 @@
 
 - Built a Windows Server 2022 Active Directory domain on Azure virtual machines, configuring AD DS, DNS, OU structure, and domain-joined Windows 10 client from scratch
 - Practiced and documented 5 simulated help desk scenarios in a live AD environment: login failures, password resets, account lockouts, new user provisioning, and RDP/domain join troubleshooting
-- Resolved domain account issues using Active Directory Users and Computers (ADUC) and PowerShell, following a structured diagnostic process (account status → DNS → secure channel → event logs)
-- Traced account lockout root causes using Windows Security Event ID 4740 and remediated stale cached credentials to prevent re-lockout
-- Provisioned domain user accounts with correct OU placement, group membership, and least-privilege access, verifiable via `gpresult /r`
+- Practiced domain account troubleshooting in a lab environment using ADUC and PowerShell, following a structured diagnostic process (account status → DNS → secure channel → event logs)
+- Practiced account lockout investigation using Windows Security Event ID 4740 concepts and documented how stale cached credentials cause repeated lockouts in a Windows domain environment
+- Documented domain user provisioning workflow covering OU placement, group membership, and least-privilege access — verification approach uses `gpresult /r` to confirm Group Policy application
 
 ---
 
