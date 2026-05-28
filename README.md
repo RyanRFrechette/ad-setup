@@ -190,6 +190,22 @@ This lab extends foundational IT support concepts from the Google IT Support Pro
 
 ---
 
+## Project Documents
+
+| Document | Description |
+|---|---|
+| [case-study.md](case-study.md) | Hiring-manager case study — environment, what I built, troubleshooting approach |
+| [resume-bullets.md](resume-bullets.md) | Resume bullets, LinkedIn summary, GitHub summary, ATS keyword bank |
+| [diagrams/architecture.md](diagrams/architecture.md) | Lab architecture diagram and authentication flow |
+| [screenshots-needed.md](screenshots-needed.md) | Audit of existing screenshot evidence and optional captures to strengthen the repo |
+| [tickets/](tickets/) | Five simulated help desk support scenarios with structured documentation |
+
+> **Note:** The five support tickets are simulated scenarios practiced in the lab environment, not production incidents. Each is documented with the diagnostic process and resolution path that would apply to a real-world equivalent.
+
+---
+
 ## Status
 
-Completed portfolio lab. Planned additions: Group Policy Object configuration, shared folder permissions, account lockout policy testing, and deeper multi-step troubleshooting scenarios.
+**Portfolio-ready.** Lab environment built and documented with screenshot evidence. Five help desk support scenarios documented as structured tickets. Case study and resume materials included.
+
+Planned additions: Group Policy Object configuration, shared folder permissions, account lockout policy testing, and deeper multi-step troubleshooting scenarios.
