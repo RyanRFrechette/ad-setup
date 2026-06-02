@@ -208,4 +208,4 @@ This lab extends foundational IT support concepts from the Google IT Support Pro
 
 **Portfolio-ready.** Lab environment built and documented with screenshot evidence. Five help desk support scenarios documented as structured tickets. Case study and resume materials included.
 
-Planned additions: Group Policy Object configuration, shared folder permissions, account lockout policy testing, and deeper multi-step troubleshooting scenarios.
+Optional future additions: Group Policy Object configuration, shared folder permissions, account lockout policy testing, and deeper multi-step troubleshooting scenarios.
